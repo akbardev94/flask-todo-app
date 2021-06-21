@@ -1,0 +1,58 @@
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<body>
+        <div class="container">
+                <h2 class="font-weight-bold">TODO APPS</h2> 
+                
+                <form action="/task" method="post">
+                    <p><input type="text" name="content"></p>
+                    <input class="btn btn-primary" type="submit" value="Add task">
+                </form>
+                
+                <table class="table table-dark table-striped table-bordered border-primary">
+                    <thead>
+                      <tr>
+                        <th scope="col">Activities</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    {% for task in tasks %}
+                    <tbody>
+                      <tr>
+                        <td>
+                            {% if task.done %} <div class="badge bg-danger"> {% endif %}{{ task.content }} {% if task.done %} </div>{% endif %}
+                        </td>
+                        <td > 
+                            <a class="btn btn-success" href="/done/{{ task.id }}">Success</a>
+                            <a onclick="sweet()" class="btn btn-danger" href="/delete/{{ task.id }}">Delete</a></td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+        </div>
+</body>
+
+<script>
+    function sweet(){
+        Swal.fire({
+  title: 'Are you sure?',
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire(
+      'Deleted!',
+      'Your file has been deleted.',
+      'success'
+    )
+  }
+})
+    }
+</script>
+
